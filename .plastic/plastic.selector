@@ -1,0 +1,4 @@
+repository "First_3D_miniGame/First_3D_miniGame@7972209288363@cloud"
+  path "/"
+    br "/main"
+    co "/main"
