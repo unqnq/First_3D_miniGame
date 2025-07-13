@@ -13,13 +13,13 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOverPanel.SetActive(true);
-        // Time.timeScale = 0f; // Pause the game
+        Time.timeScale = 0f;
     }
 
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("Game Restarted");
-        Time.timeScale = 1f; // Resume the game
+        Time.timeScale = 1f;
     }
 }

@@ -4,12 +4,14 @@ using TMPro;
 public class Score : MonoBehaviour
 {
     public int playerScore = 0;
+    public float scoreUpdateInterval = 1f;
     public TMP_Text scoreText;
-    public Transform player;
+
+    private float timer = 0f;
     void Start()
     {
         scoreText = GameObject.Find("ScoreText").GetComponent<TMP_Text>();
-        player = GameObject.Find("Player").transform;
+
     }
     void Update()
     {
@@ -18,7 +20,12 @@ public class Score : MonoBehaviour
 
     void UpdateScore()
     {
-        playerScore = ((int)player.position.z)/2;
-        scoreText.text = playerScore.ToString();
+        timer += Time.deltaTime;
+        if (timer >= scoreUpdateInterval)
+        {
+            playerScore += 1;
+            timer = 0f;
+            scoreText.text = playerScore.ToString();
+        }
     }
 }

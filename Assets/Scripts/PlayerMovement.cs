@@ -4,16 +4,23 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float forwardForce = 1000f;
-    public float sidewaysForce = 500f;
-    public float platformWidth = 7f; 
+    public float sidewaysForceBase = 50f;
+    public float platformWidth = 7f;
 
     private Rigidbody rb;
     private Vector2 movementInput;
+    public float currentSidewaysForce;
+    private SpeedMoveManager speedManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        speedManager = FindFirstObjectByType<SpeedMoveManager>();
+        if (speedManager == null)
+        {
+            Debug.LogError("SpeedManager not found!");
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -23,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.AddForce(new Vector3(movementInput.x * sidewaysForce * Time.deltaTime, 0, forwardForce * Time.deltaTime), ForceMode.VelocityChange);
+        float sidewaysForce = sidewaysForceBase;
+
+        Vector3 force = new Vector3(movementInput.x * sidewaysForce * Time.fixedDeltaTime, 0, 0);
+        rb.AddForce(force, ForceMode.VelocityChange);
     }
 }
