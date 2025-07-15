@@ -6,7 +6,7 @@ public class SpeedMoveManager : MonoBehaviour
     public float speedIncreaseRate = 0.1f;
     public float maxSpeed = 100f;
 
-    private float currentSpeed;
+    public float currentSpeed;
 
     void Start()
     {

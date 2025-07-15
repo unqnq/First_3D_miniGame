@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2748085840633440422}
   - component: {fileID: 4097333496993758809}
   - component: {fileID: 7047969832591197759}
-  - component: {fileID: 5655693422686084435}
   - component: {fileID: 7522250695957146848}
   m_Layer: 0
   m_Name: Platform
@@ -31,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15, y: 1, z: 60}
+  m_LocalScale: {x: 15, y: 1, z: 51}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -110,20 +109,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5655693422686084435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7101869121007319882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c7ddd61b1b7334fa216b8a849f9c47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 45
-  despawnZ: 0
 --- !u!114 &7522250695957146848
 MonoBehaviour:
   m_ObjectHideFlags: 0

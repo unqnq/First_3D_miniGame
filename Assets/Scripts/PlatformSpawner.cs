@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlatformSpawner : MonoBehaviour
 {
     public ObjectPool pool;
-    public float platformLength = 35f;
+    public float platformLength = 50f;
     public Transform player;
     public int spawnAheadCount = 5;
 
@@ -24,27 +24,22 @@ public class PlatformSpawner : MonoBehaviour
 
     void SpawnPlatform()
     {
+        spawnZ = activePlatforms.Count * platformLength;
         Vector3 spawnPos = new Vector3(0, 0, spawnZ);
         GameObject platform = pool.GetFromPool(PoolTypeEnum.Platform, spawnPos);
 
-        LevelMovement lm = platform.GetComponent<LevelMovement>();
-        if (lm != null)
-        {
-            lm.OnDespawn += HandlePlatformDespawn;
-        }
+        LevelMovement level = FindAnyObjectByType<LevelMovement>();
+        level.RegisterPlatform(platform);
         activePlatforms.Add(platform);
-        spawnZ += platformLength;
-
-        // SpawnObstaclesAndCoins(platform.transform);
     }
 
-    void HandlePlatformDespawn(GameObject platform)
+    public void HandlePlatformDespawn(GameObject platform)
     {
         if (activePlatforms.Contains(platform))
         {
             activePlatforms.Remove(platform);
-
-            Vector3 newPos = new Vector3(0, 0, spawnZ);
+            spawnZ = activePlatforms[activePlatforms.Count - 1].transform.position.z;
+            Vector3 newPos = new Vector3(0, 0, spawnZ+platformLength);
             platform.transform.position = newPos;
             activePlatforms.Add(platform);
 
@@ -59,8 +54,8 @@ public class PlatformSpawner : MonoBehaviour
             Transform child = platform.GetChild(i);
             pool.ReturnToPool(child.gameObject);
         }
-        
-        float[] lanes = { -6f, 0f, 6f };
+
+        float[] lanes = { -6f, -3f, 0f, 3f, 6f };
         int itemCount = Random.Range(1, 6);
 
         for (int i = 0; i < itemCount; i++)

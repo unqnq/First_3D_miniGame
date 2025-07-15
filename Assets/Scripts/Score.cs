@@ -15,17 +15,22 @@ public class Score : MonoBehaviour
     }
     void Update()
     {
-        UpdateScore();
-    }
-
-    void UpdateScore()
-    {
         timer += Time.deltaTime;
         if (timer >= scoreUpdateInterval)
         {
-            playerScore += 1;
+            AddScore(1);
             timer = 0f;
-            scoreText.text = playerScore.ToString();
         }
+        UpdateScore();
+    }
+
+    public void UpdateScore()
+    {
+        scoreText.text = playerScore.ToString();
+    }
+
+    public void AddScore(int increase)
+    {
+        playerScore += increase;
     }
 }
