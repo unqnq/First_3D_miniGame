@@ -6,6 +6,7 @@ public class PlayerCollision : MonoBehaviour
     public PlayerMovement playerMovement;
 
     private GameManager gameManager;
+    private SpeedMoveManager speedManager;
     private GameObject coinEffect;
     private ObjectPool pool;
     void Start()
@@ -14,12 +15,14 @@ public class PlayerCollision : MonoBehaviour
         gameManager = FindFirstObjectByType<GameManager>();
         coinEffect = Resources.Load<GameObject>("CoinEffect");
         pool = FindFirstObjectByType<ObjectPool>();
+        speedManager = FindAnyObjectByType<SpeedMoveManager>();
     }
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Obstacle" || collision.gameObject.tag == "DeadZone")
         {
             playerMovement.enabled = false;
+            speedManager.currentSpeed = 0;
             gameManager.GameOver();
         }
     }
