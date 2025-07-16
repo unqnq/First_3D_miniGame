@@ -15,8 +15,13 @@ public class PlayerMovement : MonoBehaviour
     public float dashDistance = 3f;
     public float dashDuration = 0.15f;
     public float dashCooldown = 0.5f;
-
     private bool isDashing = false;
+    private bool dashTriggered = false;
+
+    [Header("Swipe Settings")]
+    private Vector2 swipeStartPos;
+    public float minSwipeDistance = 100f;
+
 
     void Start()
     {
@@ -26,14 +31,29 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        movementInput = context.ReadValue<Vector2>();
+        if (Touchscreen.current != null && context.control.device is Touchscreen)
+        {
+            Vector2 touchPos = context.ReadValue<Vector2>();
+            float screenMid = Screen.width / 2f;
+
+            movementInput = new Vector2(touchPos.x < screenMid ? -1f : 1f, 0f);
+        }
+        else
+        {
+            movementInput = context.ReadValue<Vector2>();
+
+        }
     }
 
     void FixedUpdate()
     {
         if (speedManager == null) return;
-
         float sidewaysForce = speedManager.GetCurrentSpeed();
+
+        if (Touchscreen.current != null && !Touchscreen.current.primaryTouch.press.isPressed)
+        {
+            movementInput = Vector2.zero;
+        }
 
         rb.AddForce(new Vector3(movementInput.x * sidewaysForce * Time.deltaTime, 0), ForceMode.VelocityChange);
 
@@ -43,37 +63,52 @@ public class PlayerMovement : MonoBehaviour
         rb.position = pos;
     }
 
+    void Update()
+    {
+        // Свайп для телефону
+        if (Touchscreen.current != null)
+        {
+            var touch = Touchscreen.current.primaryTouch;
+
+            if (touch.press.wasPressedThisFrame)
+            {
+                swipeStartPos = touch.position.ReadValue();
+            }
+            else if (touch.press.wasReleasedThisFrame)
+            {
+                Vector2 endTouchPos = touch.position.ReadValue();
+                float deltaX = endTouchPos.x - swipeStartPos.x;
+
+                if (Mathf.Abs(deltaX) > minSwipeDistance)
+                {
+                    if (deltaX > 0)
+                        DashRight();
+                    else
+                        DashLeft();
+                }
+            }
+        }
+    }
+
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started && !dashTriggered)
         {
-            Vector2 touchPos = Vector2.zero;
-
-            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
-            {
-                touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
-                float screenMid = Screen.width / 2f;
-
-                if (touchPos.x < screenMid)
-                    DashLeft();
-                else
-                    DashRight();
-            }
-            else
-            {
-                if (Keyboard.current.aKey.isPressed)
-                    DashLeft();
-                else if (Keyboard.current.dKey.isPressed)
-                    DashRight();
-            }
+            dashTriggered = true;
+            if (Keyboard.current.aKey.isPressed)
+                DashLeft();
+            else if (Keyboard.current.dKey.isPressed)
+                DashRight();
+        }
+        else if (context.canceled)
+        {
+            dashTriggered = false;
         }
     }
 
     void DashLeft()
     {
         if (isDashing) return;
-        Debug.Log("left");
-
         float targetX = Mathf.Clamp(rb.position.x - dashDistance, -platformWidth, platformWidth);
         DoTweenDashToX(targetX, true);
     }
@@ -81,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
     void DashRight()
     {
         if (isDashing) return;
-        Debug.Log("right");
         float targetX = Mathf.Clamp(rb.position.x + dashDistance, -platformWidth, platformWidth);
         DoTweenDashToX(targetX, false);
     }
