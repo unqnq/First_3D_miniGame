@@ -1942,6 +1942,7 @@ MonoBehaviour:
   dashDistance: 3
   dashDuration: 0.15
   dashCooldown: 0.5
+  minSwipeDistance: 100
 --- !u!114 &2034918046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2069,8 +2070,73 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: f17a19a1-5647-4b19-8cfb-87b6ec7418fd
-    m_ActionName: 'Player/Dash[/Keyboard/a,/Keyboard/d]'
+    m_ActionId: 65fb5a71-76a0-46a6-aa06-3105e376e667
+    m_ActionName: 'Player/Dash[/Keyboard/space,/Keyboard/d,/Keyboard/a,/Device Simulator
+      Touchscreen/primaryTouch/tap]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2034918045}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnMoveTouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 501048e7-7a98-4e49-8622-c466da4ce32e
+    m_ActionName: 'TouchControls/Move[/Device Simulator Touchscreen/primaryTouch/position]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2034918045}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnDashTouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bf1d9019-3c87-461a-bdb2-fc7f769fe7d8
+    m_ActionName: 'TouchControls/Dash[/Device Simulator Touchscreen/primaryTouch/tap]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2034918045}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnDashTouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 58c78a46-dac5-41e6-9531-cf7a264aa6b1
+    m_ActionName: 'KeyboardControls/Move[/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2034918045}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnDashKeyboard
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 01b18b43-be6d-4868-8329-5fd10cbb7669
+    m_ActionName: 'KeyboardControls/Dash[/Keyboard/space,/Keyboard/d,/Keyboard/a]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
